@@ -15,8 +15,8 @@ public class UserDaoTests {
         String name = "lhj";
         String password = "1234";
 
-        ConnectionMaker connectionMaker = new JejuConnectionMaker();
-        UserDao userDao = new UserDao(connectionMaker);
+        DaoFactory daoFactory = new DaoFactory();
+        UserDao userDao = daoFactory.userDao();
 
         User user = userDao.findById(id);
 
@@ -34,8 +34,8 @@ public class UserDaoTests {
         user.setName(name);
         user.setPassword(password);
 
-        ConnectionMaker connectionMaker = new JejuConnectionMaker();
-        UserDao userDao = new UserDao(connectionMaker);
+        DaoFactory daoFactory = new DaoFactory();
+        UserDao userDao = daoFactory.userDao();
 
         userDao.insert(user);
 
