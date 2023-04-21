@@ -1,5 +1,6 @@
 package kr.ac.jejunu.user;
 
+import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
@@ -48,6 +49,46 @@ public class UserDaoTests {
         User insertedUser = userDao.findById(user.getId());
         assertThat(insertedUser.getName(), is(name));
         assertThat(insertedUser.getPassword(), is(password));
+    }
+
+    @Test
+    public void update() throws SQLException {
+        String name = "hyungjun";
+        String password = "1234";
+
+        User user = new User();
+        user.setName(name);
+        user.setPassword(password);
+
+        userDao.insert(user);
+
+        String updateName = "lhj99";
+        String updatePassword = "990321";
+
+        user.setName(updateName);
+        user.setPassword(updatePassword);
+        userDao.update(user);
+
+        User updatedUser = userDao.findById(user.getId());
+
+        assertThat(updatedUser.getName(), is(updateName));
+        assertThat(updatedUser.getPassword(), is(updatePassword));
+    }
+
+    @Test
+    public void delete() throws SQLException {
+        String name = "hyungjun";
+        String password = "1234";
+
+        User user = new User();
+        user.setName(name);
+        user.setPassword(password);
+
+        userDao.insert(user);
+        userDao.delete(user.getId());
+
+        User deletedUser = userDao.findById(user.getId());
+        assertThat(deletedUser, IsNull.nullValue());
     }
 
 //    @Test
